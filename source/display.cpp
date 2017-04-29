@@ -1,6 +1,8 @@
 #include "display.h"
 #include <iostream>
 #include <string>
+#include <iterator>
+#include <stdio.h>
 void clear_screen() {
     consoleSelect(&topScreen);
     //Cursor to one under top left
@@ -18,6 +20,7 @@ void update_screen(File& file, unsigned int current_line) {
     unsigned int count = 0;
     
     //Iterator to go through list<vector<char>>
+    
     for (auto iter = file.lines.begin(); iter != file.lines.end(); iter++) {
         //If true, output a space so line selector doesn't overwrite a letter
         if (count == current_line)
@@ -27,7 +30,7 @@ void update_screen(File& file, unsigned int current_line) {
         for (const auto& ch : *iter)
             std::cout << ch;
     }
-
+    
     //Prints '>' at selected line
-    std::cout << "\x1b[" << current_line+1 << ";0H>";
+    printf("\x1b[%d;0H>", current_line+1);
 }

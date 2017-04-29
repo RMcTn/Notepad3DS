@@ -1,10 +1,11 @@
 #pragma once
 
 #include "file.h"
+#include <3ds.h>
 
 #define CLEAR_SCREEN_LINES 40
 
-extern PrintConsole, topScreen, bottomScreen;
+extern PrintConsole topScreen, bottomScreen; 
 
 //Clears everything off the top screen
 void clear_screen();
