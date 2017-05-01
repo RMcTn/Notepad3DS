@@ -20,6 +20,8 @@ struct File {
 
 
     std::list<std::vector<char>> lines;
+    //Used to check if file open was successful
+    bool read_success = false;
 };
 
 std::vector<char> char_arr_to_vector(char* arr);

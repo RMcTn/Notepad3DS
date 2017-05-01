@@ -18,24 +18,13 @@ File open_file(std::string& filename) {
     std::ifstream file_open (filename);
     File file;
     if (file_open.is_open()) {
-        char ch;
         std::string line;
         while (getline(file_open, line)) {
-            std::vector<char> thing;
+            std::vector<char> line_vec;
             for (const auto& ch : line)
-                thing.push_back(ch);
-            file.add_line(thing);
+                line_vec.push_back(ch);
+            file.add_line(line_vec);
         }
-        /*
-        while (file_open >> ch) {
-            std::vector<char> line;
-            line.push_back(ch);
-            if (ch == '\n') {
-                file.lines.push_back(line);
-                line.clear();
-            }
-        }
-        */
         file.read_success = true;
         file_open.close();
     } else {

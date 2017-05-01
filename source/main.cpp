@@ -102,6 +102,28 @@ int main(int argc, char **argv)
 
         if (kDown & KEY_Y) {
             //Open a file
+            curr_line = 0;
+            //Clear buffer
+            memset(mybuf, '\0', BUFFER_SIZE);
+
+            //Get file name
+           
+            swkbdSetHintText(&swkbd, "Input filename here."); 
+            button = swkbdInputText(&swkbd, mybuf, sizeof(mybuf));
+            std::string filename = "";
+            for (int i = 0; mybuf[i] != '\0'; i++)
+                filename.push_back(mybuf[i]);
+            file = open_file(filename);
+            if (file.read_success) {
+                //display file
+                update_screen(file, curr_line);
+                //auto iter = file.lines.begin();
+                //for (const auto& ch: *iter)
+                   // std::cout << ch;
+                std::cout << "success";
+            } else {
+                std::cout << "Unable to open " << filename << std::endl;
+            }
         }
 
         if (kDown & KEY_DDOWN) {
