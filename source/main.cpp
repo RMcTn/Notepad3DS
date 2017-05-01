@@ -101,6 +101,7 @@ int main(int argc, char **argv)
         }
 
         if (kDown & KEY_Y) {
+            //Similar code to pressing X, see about refactoring
             //Open a file
             curr_line = 0;
             //Clear buffer
@@ -117,9 +118,6 @@ int main(int argc, char **argv)
             if (file.read_success) {
                 //display file
                 update_screen(file, curr_line);
-                //auto iter = file.lines.begin();
-                //for (const auto& ch: *iter)
-                   // std::cout << ch;
                 std::cout << "success";
             } else {
                 std::cout << "Unable to open " << filename << std::endl;
