@@ -1,10 +1,17 @@
 #include <3ds.h>
 #include <stdio.h>
 #include <string.h>
-#include "file.h"
-#include "display.h"
 #include <iostream>
 #include <algorithm>
+#include "file.h"
+#include "display.h"
+#include "file_io.h"
+
+//TODO: Saving file
+//      Loading file (How to handle files with empty lines? Treat them as \n?)
+//      Handling more than 28 lines. Display around 28 lines at a time so something like
+//      for (int line = curr_line; line < (MAX_LINES + line); line++)
+//      then print out vector[line] until max line hit 
 
 #define BUFFER_SIZE 60
 #define MAX_BOTTOM_SIZE 28
@@ -45,10 +52,11 @@ int main(int argc, char **argv)
         swkbdInit(&swkbd, SWKBD_TYPE_NORMAL, 1, -1);
         swkbdSetValidation(&swkbd, SWKBD_NOTEMPTY_NOTBLANK, SWKBD_FILTER_DIGITS | SWKBD_FILTER_AT | SWKBD_FILTER_PERCENT | SWKBD_FILTER_BACKSLASH | SWKBD_FILTER_PROFANITY, 2);
         swkbdSetFeatures(&swkbd, SWKBD_MULTILINE);
+
         if (kDown & KEY_A) {
             //Select current line for editing
             swkbdSetHintText(&swkbd, "Input text here.");
-            //File.lines iterator to find current selected line
+            //Iterator to find current selected line
             auto line = file.lines.begin();
             if (curr_line < file.lines.size())
             {
@@ -58,7 +66,6 @@ int main(int argc, char **argv)
                 //Need a char array to output to keyboard
                 char current_text[BUFFER_SIZE] = "";
                 copy(line->begin(), line->end(), current_text);
-                consoleSelect(&bottomScreen);
                 swkbdSetInitialText(&swkbd, current_text);
             }
             didit = true;
@@ -72,6 +79,25 @@ int main(int argc, char **argv)
 
         if (kDown & KEY_X) {
             //Save current file
+            //Clear buffer
+            memset(mybuf, '\0', BUFFER_SIZE);
+
+            //Get file name
+           
+            swkbdSetHintText(&swkbd, "Input filename here."); 
+            button = swkbdInputText(&swkbd, mybuf, sizeof(mybuf));
+            std::string filename = "";
+            for (int i = 0; mybuf[i] != '\0'; i++)
+                filename.push_back(mybuf[i]);
+
+            //Write out characters to file
+            bool success = write_to_file(filename, file);
+            
+            if (success)
+                std::cout << "File written to " << filename << std::endl;
+            else
+                std::cout << "Problem occured when writing to " << filename << std::endl;
+
         }
 
         if (kDown & KEY_Y) {
