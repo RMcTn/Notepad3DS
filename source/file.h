@@ -16,18 +16,10 @@ struct File {
 
     //Called when an existing line is selected
     //line is current selected line. Used to advance list iterator
-    void edit_line(std::vector<char>& new_text, int line);
+    void edit_line(std::vector<char>& new_text, unsigned int line);
 
 
     std::list<std::vector<char>> lines;
 };
 
-std::vector<char> char_arr_to_vector(char* arr) { 
-    std::vector<char> text;
-    int i = 0;
-    while(*arr != '\0') {
-        text.push_back(*arr);
-        i++;
-    }
-    return text;
-}
+std::vector<char> char_arr_to_vector(char* arr);
