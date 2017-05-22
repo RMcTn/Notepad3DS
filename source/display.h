@@ -4,6 +4,7 @@
 #include <3ds.h>
 
 #define CLEAR_SCREEN_LINES 40
+#define MAX_LINES 28
 
 extern PrintConsole topScreen, bottomScreen; 
 

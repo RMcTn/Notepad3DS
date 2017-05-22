@@ -18,6 +18,7 @@ struct File {
     //line is current selected line. Used to advance list iterator
     void edit_line(std::vector<char>& new_text, unsigned int line);
 
+    int size() {return lines.size();}
 
     std::list<std::vector<char>> lines;
     //Used to check if file open was successful

@@ -7,8 +7,7 @@
 #include "display.h"
 #include "file_io.h"
 
-//TODO: Saving file
-//      Loading file (How to handle files with empty lines? Treat them as \n?)
+//TODO: 
 //      Handling more than 28 lines. Display around 28 lines at a time so something like
 //      for (int line = curr_line; line < (MAX_LINES + line); line++)
 //      then print out vector[line] until max line hit 
@@ -28,6 +27,7 @@ int main(int argc, char **argv)
 	printf("Press X to save file\n");
 	printf("Press Y to open file\n");
 	printf("Press START to exit\n");
+    printf("Version 0.32 - Crash scrolling edition\n");
     
     File file;      //Use as default file
     unsigned int curr_line = 0;
@@ -126,7 +126,8 @@ int main(int argc, char **argv)
 
         if (kDown & KEY_DDOWN) {
             //Move a line down (towards bottom of screen)
-            if (curr_line != MAX_BOTTOM_SIZE && curr_line < file.lines.size()) {
+        
+            if ( (curr_line != MAX_BOTTOM_SIZE) && (curr_line < file.lines.size() )) {
                 curr_line++;
                 update_screen(file, curr_line);
             }
@@ -134,11 +135,13 @@ int main(int argc, char **argv)
 
         if (kDown & KEY_DUP) {
             //Move a line up (towards top of screen)
+          
             if (curr_line != 0) {
                 curr_line--;
                 update_screen(file, curr_line);
             }
         }
+
 
 
 		if (didit)

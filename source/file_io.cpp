@@ -17,6 +17,7 @@ bool write_to_file(std::string& filename, File& file) {
 File open_file(std::string& filename) {
     std::ifstream file_open (filename);
     File file;
+    file.lines.pop_front();
     if (file_open.is_open()) {
         std::string line;
         while (getline(file_open, line)) {
