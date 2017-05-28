@@ -26,6 +26,8 @@ File open_file(std::string& filename) {
                 line_vec.push_back(ch);
             file.add_line(line_vec);
         }
+        if(file.lines.end()->back() != '\n')
+            file.lines.push_back(std::vector<char> {'\n'});
         file.read_success = true;
         file_open.close();
     } else {
