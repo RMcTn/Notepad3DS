@@ -15,6 +15,7 @@
 #define BUFFER_SIZE 60
 #define MAX_BOTTOM_SIZE 28
 PrintConsole topScreen, bottomScreen;
+int scroll = 0;
 int main(int argc, char **argv)
 {
 	gfxInitDefault();
@@ -50,7 +51,7 @@ int main(int argc, char **argv)
 		bool didit = false;
 
         swkbdInit(&swkbd, SWKBD_TYPE_NORMAL, 1, -1);
-        swkbdSetValidation(&swkbd, SWKBD_NOTEMPTY_NOTBLANK, SWKBD_FILTER_DIGITS | SWKBD_FILTER_AT | SWKBD_FILTER_PERCENT | SWKBD_FILTER_BACKSLASH | SWKBD_FILTER_PROFANITY, 2);
+        swkbdSetValidation(&swkbd, SWKBD_ANYTHING, SWKBD_FILTER_DIGITS | SWKBD_FILTER_AT | SWKBD_FILTER_PERCENT /*| SWKBD_FILTER_BACKSLASH*/ | SWKBD_FILTER_PROFANITY, 2);
         swkbdSetFeatures(&swkbd, SWKBD_MULTILINE);
 
         if (kDown & KEY_A) {
@@ -63,6 +64,9 @@ int main(int argc, char **argv)
                 if (curr_line != 0)
                     advance(line, curr_line);
                 
+                if (curr_line == file.lines.size() - 1) {
+                    file.lines.push_back(std::vector<char>{'\n'});
+                }
                 //Need a char array to output to keyboard
                 char current_text[BUFFER_SIZE] = "";
                 copy(line->begin(), line->end(), current_text);
@@ -95,8 +99,10 @@ int main(int argc, char **argv)
             
             if (success)
                 std::cout << "File written to " << filename << std::endl;
-            else
-                std::cout << "Problem occured when writing to " << filename << std::endl;
+            else {
+                std::string error_message = "Problem occured when writing to " + filename;
+                print_error(error_message);
+            }
 
         }
 
@@ -104,6 +110,7 @@ int main(int argc, char **argv)
             //Similar code to pressing X, see about refactoring
             //Open a file
             curr_line = 0;
+            scroll = 0;
             //Clear buffer
             memset(mybuf, '\0', BUFFER_SIZE);
 
@@ -114,23 +121,39 @@ int main(int argc, char **argv)
             std::string filename = "";
             for (int i = 0; mybuf[i] != '\0'; i++)
                 filename.push_back(mybuf[i]);
+            File oldfile = file;
             file = open_file(filename);
             if (file.read_success) {
                 //display file
                 update_screen(file, curr_line);
                 std::cout << "success";
             } else {
-                std::cout << "Unable to open " << filename << std::endl;
+                file = oldfile;
+                std::string pls;
+                //print_error("Unable to open");
+                update_screen(file, curr_line);
             }
         }
 
         if (kDown & KEY_DDOWN) {
             //Move a line down (towards bottom of screen)
-        
-            if ( (curr_line != MAX_BOTTOM_SIZE) && (curr_line < file.lines.size() )) {
+       /* 
+            if ( (curr_line < MAX_BOTTOM_SIZE) && (curr_line < file.lines.size() )) {
                 curr_line++;
-                update_screen(file, curr_line);
             }
+            */
+            if (curr_line < file.lines.size() - 1) {
+
+            if ( (curr_line - scroll >= MAX_BOTTOM_SIZE) && (curr_line < file.lines.size() ) ) {
+                    scroll++;
+                    curr_line++;
+                } else {
+                    curr_line++;
+                }
+            }
+
+            update_screen(file, curr_line);
+            
         }
 
         if (kDown & KEY_DUP) {
@@ -138,6 +161,9 @@ int main(int argc, char **argv)
           
             if (curr_line != 0) {
                 curr_line--;
+                if (curr_line - scroll <= 0 && scroll != 0) {
+                    scroll--;
+                }
                 update_screen(file, curr_line);
             }
         }
