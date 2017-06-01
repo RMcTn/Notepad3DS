@@ -15,6 +15,29 @@ void clear_screen() {
     std::cout << "\x1b[0;0H";
 }
 
+void clear_save_status() {
+    consoleSelect(&bottomScreen);
+    printf(SAVE_STATUS_LINE);
+    printf("                                      ");
+    printf(SAVE_STATUS_LINE);
+}
+
+void print_version(std::string version) {
+    consoleSelect(&bottomScreen);
+    printf(VERSION_LINE);
+    std::cout << version << std::endl;
+}
+
+void print_instructions() {
+    consoleSelect(&bottomScreen);
+    printf(INSTRUCTION_LINE);
+	printf("Press A to select current line\n");
+	printf("Press B to clear screen\n");
+	printf("Press X to save file\n");
+	printf("Press Y to open file\n");
+	printf("Press START to exit\n");
+}
+
 
 std::string char_vec_to_string(std::vector<char>& line) {
 
@@ -46,18 +69,19 @@ void print_text(const char* str, unsigned int count, unsigned int selected_line)
                 }
 }
 
-void print_error(std::string error_message) {
-    consoleSelect(&bottomScreen);
-    printf(ERROR_LINE);
+void print_save_status(std::string message) {
+    clear_save_status();
+    std::cout << message << std::endl;
+}
+
+void clear_line_status() {
+    printf(LINE_STATUS_LINE);
     printf("                                      ");
-    printf(ERROR_LINE);
-    std::cout << error_message << std::endl;
+    printf(LINE_STATUS_LINE);
 }
 
 void print_line_status(unsigned int current_line) {
-    printf(LINE_STATUS_LINE);
-    printf("                                      ");
-    printf(LINE_STATUS_LINE);
+    clear_line_status();
     std::cout << "Current line: " << current_line+1;
 }
 
@@ -65,10 +89,6 @@ void update_screen(File& file, unsigned int current_line) {
     clear_screen();
     consoleSelect(&bottomScreen);
     print_line_status(current_line);
-    printf("\x1b[8;0H");
-    printf("                                      ");
-    printf("\x1b[8;0H");
-    std::cout << scroll << std::endl;
     consoleSelect(&topScreen);
     unsigned int count = 0;
     

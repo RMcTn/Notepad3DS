@@ -7,13 +7,12 @@
 #include "display.h"
 #include "file_io.h"
 
-//TODO: 
-//      Handling more than 28 lines. Display around 28 lines at a time so something like
-//      for (int line = curr_line; line < (MAX_LINES + line); line++)
-//      then print out vector[line] until max line hit 
-
 #define BUFFER_SIZE 60
 #define MAX_BOTTOM_SIZE 28
+
+#define VERSION "Notepad3DS Version 1.0"
+
+
 PrintConsole topScreen, bottomScreen;
 int scroll = 0;
 int main(int argc, char **argv)
@@ -23,12 +22,9 @@ int main(int argc, char **argv)
     consoleInit(GFX_BOTTOM, &bottomScreen);
     consoleSelect(&bottomScreen);
     //Software keyboard thanks to fincs
-	printf("Press A to select current line\n");
-	printf("Press B to clear screen\n");
-	printf("Press X to save file\n");
-	printf("Press Y to open file\n");
-	printf("Press START to exit\n");
-    printf("Version 0.32 - Crash scrolling edition\n");
+    print_instructions();
+
+    print_version(VERSION);
     
     File file;      //Use as default file
     unsigned int curr_line = 0;
@@ -98,10 +94,9 @@ int main(int argc, char **argv)
             bool success = write_to_file(filename, file);
             
             if (success)
-                std::cout << "File written to " << filename << std::endl;
+                print_save_status("File written to " + filename);
             else {
-                std::string error_message = "Problem occured when writing to " + filename;
-                print_error(error_message);
+                print_save_status("Failed to write " + filename);
             }
 
         }
@@ -123,25 +118,25 @@ int main(int argc, char **argv)
                 filename.push_back(mybuf[i]);
             File oldfile = file;
             file = open_file(filename);
+            //print functions here seem to crash the program
             if (file.read_success) {
-                //display file
                 update_screen(file, curr_line);
-                std::cout << "success";
+                clear_save_status();
+                std::cout << "Successfully opened " << filename << std::endl;
+                consoleSelect(&topScreen);
+                //print_save_status("Successfully opened " + filename);
             } else {
                 file = oldfile;
-                std::string pls;
-                //print_error("Unable to open");
                 update_screen(file, curr_line);
+                clear_save_status();
+                std::cout << "Failed to open " << filename << std::endl;
+                consoleSelect(&topScreen);
+                //print_save_status("Failed to open " + filename);
             }
         }
 
         if (kDown & KEY_DDOWN) {
             //Move a line down (towards bottom of screen)
-       /* 
-            if ( (curr_line < MAX_BOTTOM_SIZE) && (curr_line < file.lines.size() )) {
-                curr_line++;
-            }
-            */
             if (curr_line < file.lines.size() - 1) {
 
             if ( (curr_line - scroll >= MAX_BOTTOM_SIZE) && (curr_line < file.lines.size() ) ) {
