@@ -61,7 +61,7 @@ void print_text(const char* str, unsigned int count, unsigned int selected_line)
 
                 if (count == selected_line)
                     if (str[0] == '\n')
-                        printf("\x1b[47;30m(empty line)\x1b[0m");
+                        printf("\x1b[47;30m(empty line)\x1b[0m\n");
                     else
                         printf("\x1b[47;30m%s\x1b[0m", str);
                 else {
