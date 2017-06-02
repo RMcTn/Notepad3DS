@@ -18,7 +18,7 @@ void clear_screen() {
 void clear_save_status() {
     consoleSelect(&bottomScreen);
     printf(SAVE_STATUS_LINE);
-    printf("                                      ");
+    printf("                                               ");
     printf(SAVE_STATUS_LINE);
 }
 
@@ -76,7 +76,7 @@ void print_save_status(std::string message) {
 
 void clear_line_status() {
     printf(LINE_STATUS_LINE);
-    printf("                                      ");
+    printf("                                               ");
     printf(LINE_STATUS_LINE);
 }
 
