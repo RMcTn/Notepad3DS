@@ -36,6 +36,9 @@ void print_instructions() {
 	printf("Press X to save file\n");
 	printf("Press Y to open file\n");
     printf("Press R to search file\n");
+    printf("Hold L to jump to top/end with up/down\n");
+    printf("Press Down DPad to move down\n");
+    printf("Press Up DPad to move up\n");
 	printf("Press START to exit\n");
 }
 

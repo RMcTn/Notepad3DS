@@ -15,6 +15,7 @@
 
 PrintConsole topScreen, bottomScreen;
 int scroll = 0;
+bool fast_scroll = false;
 int main(int argc, char **argv)
 {
 	gfxInitDefault();
@@ -37,6 +38,7 @@ int main(int argc, char **argv)
 		hidScanInput();
 
 		u32 kDown = hidKeysDown();
+        u32 kHeld = hidKeysHeld();
 
 		if (kDown & KEY_START)
 			break;
@@ -113,6 +115,13 @@ int main(int argc, char **argv)
 
         }
 
+        if (kHeld & KEY_L) {
+            //If held, allows for jumping to end and start of file
+            fast_scroll = true;
+        } else {
+            fast_scroll = false;
+        }
+
         if (kDown & KEY_X) {
             //Save current file
             //Clear buffer
@@ -174,12 +183,18 @@ int main(int argc, char **argv)
         if (kDown & KEY_DDOWN) {
             //Move a line down (towards bottom of screen)
             if (curr_line < file.lines.size() - 1) {
+                if (fast_scroll) {
+                    curr_line = file.lines.size()-1;
+                    scroll = curr_line - MAX_BOTTOM_SIZE;
 
-            if ( (curr_line - scroll >= MAX_BOTTOM_SIZE) && (curr_line < file.lines.size() ) ) {
-                    scroll++;
-                    curr_line++;
                 } else {
-                    curr_line++;
+
+                    if ( (curr_line - scroll >= MAX_BOTTOM_SIZE) && (curr_line < file.lines.size() ) ) {
+                        scroll++;
+                        curr_line++;
+                    } else {
+                        curr_line++;
+                    }
                 }
             }
 
@@ -191,9 +206,17 @@ int main(int argc, char **argv)
             //Move a line up (towards top of screen)
           
             if (curr_line != 0) {
-                curr_line--;
-                if (curr_line - scroll <= 0 && scroll != 0) {
-                    scroll--;
+                if (fast_scroll) {
+                    //Jump to the top
+                    curr_line = 0;
+                    scroll = 0;
+
+                } else {
+
+                    curr_line--;
+                    if (curr_line - scroll <= 0 && scroll != 0) {
+                        scroll--;
+                    }
                 }
                 update_screen(file, curr_line);
             }
