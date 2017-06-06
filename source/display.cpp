@@ -35,6 +35,7 @@ void print_instructions() {
 	printf("Press B to clear screen\n");
 	printf("Press X to save file\n");
 	printf("Press Y to open file\n");
+    printf("Press R to search file\n");
 	printf("Press START to exit\n");
 }
 

@@ -18,7 +18,7 @@ struct File {
     //line is current selected line. Used to advance list iterator
     void edit_line(std::vector<char>& new_text, unsigned int line);
 
-    int find(File file, const char* search_term);
+    int find(const char* search_term);
 
     int size() {return lines.size();}
 

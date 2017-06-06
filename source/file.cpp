@@ -23,9 +23,11 @@ void File::edit_line(std::vector<char>& new_text, unsigned int line) {
 
 }
 
-int File::find(File file, const char* search_term) {
+int File::find(const char* search_term) {
     int line_number = 0;
-    for(auto line : file.lines) {
+    if (search_term[0] == '\0')
+        return -1;
+    for(auto line : this->lines) {
         auto it = std::search(line.begin(), line.end(), search_term, search_term + strlen(search_term));
         if (it != line.end())
             return line_number;

@@ -85,11 +85,17 @@ int main(int argc, char **argv)
             //Get term to search for
             swkbdSetHintText(&swkbd, "Input search term here."); 
             button = swkbdInputText(&swkbd, mybuf, sizeof(mybuf));
-            int line = file.find(file, mybuf);
+            int line = file.find(mybuf);
             if (line < 0)
                 printf("Could not find %s", mybuf);
-            else
+            else {
                 printf("Found %s at %d", mybuf, line);
+                curr_line = line;
+                if (curr_line > MAX_BOTTOM_SIZE) {
+                    scroll = curr_line - MAX_BOTTOM_SIZE;
+                }
+                update_screen(file, curr_line);
+            }   
 
         }
 
