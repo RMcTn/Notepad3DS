@@ -32,7 +32,7 @@ void print_instructions() {
     consoleSelect(&bottomScreen);
     printf(INSTRUCTION_LINE);
 	printf("Press A to select current line\n");
-	printf("Press B to clear screen\n");
+	printf("Press B to create a new file\n");
 	printf("Press X to save file\n");
 	printf("Press Y to open file\n");
     printf("Press R to search file\n");

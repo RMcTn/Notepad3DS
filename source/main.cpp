@@ -73,8 +73,22 @@ int main(int argc, char **argv)
         }
 
         if (kDown & KEY_B) {
-            //Clear screen
-            clear_screen();
+            //Create new file
+            
+            //Clear buffer
+            memset(mybuf, '\0', BUFFER_SIZE);
+            //Confirm creating a new file
+            swkbdSetHintText(&swkbd, "Are you sure you want to open a BLANK file? y/n"); 
+            button = swkbdInputText(&swkbd, mybuf, sizeof(mybuf));
+            if (mybuf[0] == 'y') {
+                File blankFile;
+                file = blankFile;
+                curr_line = 0;
+                scroll = 0;
+                update_screen(file, curr_line);
+                print_save_status("New file created");
+            } else
+                print_save_status("No new file created");
         }
 
         if (kDown & KEY_R) {
