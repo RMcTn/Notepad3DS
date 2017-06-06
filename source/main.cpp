@@ -16,6 +16,12 @@
 PrintConsole topScreen, bottomScreen;
 int scroll = 0;
 bool fast_scroll = false;
+
+void move_down(File file);
+void move_up(File file);
+
+unsigned int curr_line = 0;
+
 int main(int argc, char **argv)
 {
 	gfxInitDefault();
@@ -28,7 +34,6 @@ int main(int argc, char **argv)
     print_version(VERSION);
     
     File file;      //Use as default file
-    unsigned int curr_line = 0;
 
     update_screen(file, curr_line);
 
@@ -182,46 +187,25 @@ int main(int argc, char **argv)
 
         if (kDown & KEY_DDOWN) {
             //Move a line down (towards bottom of screen)
-            if (curr_line < file.lines.size() - 1) {
-                if (fast_scroll) {
-                    curr_line = file.lines.size()-1;
-                    scroll = curr_line - MAX_BOTTOM_SIZE;
-
-                } else {
-
-                    if ( (curr_line - scroll >= MAX_BOTTOM_SIZE) && (curr_line < file.lines.size() ) ) {
-                        scroll++;
-                        curr_line++;
-                    } else {
-                        curr_line++;
-                    }
-                }
-            }
-
-            update_screen(file, curr_line);
-            
+            move_down(file); 
         }
 
+        if (kHeld & KEY_CPAD_DOWN) {
+            //Move a line down (towards bottom of screen)
+            //as long as down is held
+            move_down(file); 
+        }
         if (kDown & KEY_DUP) {
             //Move a line up (towards top of screen)
-          
-            if (curr_line != 0) {
-                if (fast_scroll) {
-                    //Jump to the top
-                    curr_line = 0;
-                    scroll = 0;
-
-                } else {
-
-                    curr_line--;
-                    if (curr_line - scroll <= 0 && scroll != 0) {
-                        scroll--;
-                    }
-                }
-                update_screen(file, curr_line);
-            }
+            move_up(file);
         }
 
+
+        if (kHeld & KEY_CPAD_UP) {
+            //Move a line up (towards top of screen)
+            //as long as up is held
+            move_up(file);
+        }
 
 
 		if (didit)
@@ -250,4 +234,45 @@ int main(int argc, char **argv)
 
 	gfxExit();
 	return 0;
+}
+
+void move_down(File file) {
+    //Move a line down (towards bottom of screen)
+    if (curr_line < file.lines.size() - 1) {
+        if (fast_scroll) {
+            curr_line = file.lines.size()-1;
+            scroll = curr_line - MAX_BOTTOM_SIZE;
+
+        } else {
+
+            if ( (curr_line - scroll >= MAX_BOTTOM_SIZE) && (curr_line < file.lines.size() ) ) {
+                scroll++;
+                curr_line++;
+            } else {
+                curr_line++;
+            }
+        }
+    }
+
+    update_screen(file, curr_line);
+}
+
+void move_up(File file) {
+    //Move a line up (towards top of screen)
+
+    if (curr_line != 0) {
+        if (fast_scroll) {
+            //Jump to the top
+            curr_line = 0;
+            scroll = 0;
+
+        } else {
+
+            curr_line--;
+            if (curr_line - scroll <= 0 && scroll != 0) {
+                scroll--;
+            }
+        }
+        update_screen(file, curr_line);
+    }
 }
