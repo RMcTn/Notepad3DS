@@ -1,5 +1,7 @@
 #include "file.h"
+#include <algorithm>
 
+#include <string.h>
 void File::add_line(std::vector<char>& new_text) {
     //Add a newline as 3ds keyboard doesn't
     new_text.push_back('\n');
@@ -18,6 +20,20 @@ void File::edit_line(std::vector<char>& new_text, unsigned int line) {
     //Insert new_text
     lines.insert(line_iter, new_text);
     
+
+}
+
+int File::find(File file, const char* search_term) {
+    int line_number = 0;
+    for(auto line : file.lines) {
+        line_number++;
+        auto it = std::search(line.begin(), line.end(), search_term, search_term + strlen(search_term));
+        if (it != line.end())
+            return line_number;
+        
+    }
+
+    return -1;
 
 }
 

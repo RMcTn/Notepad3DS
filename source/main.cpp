@@ -77,6 +77,22 @@ int main(int argc, char **argv)
             clear_screen();
         }
 
+        if (kDown & KEY_R) {
+            //find a thing
+            
+            //Clear buffer
+            memset(mybuf, '\0', BUFFER_SIZE);
+            //Get term to search for
+            swkbdSetHintText(&swkbd, "Input search term here."); 
+            button = swkbdInputText(&swkbd, mybuf, sizeof(mybuf));
+            int line = file.find(file, mybuf);
+            if (line < 0)
+                printf("Could not find %s", mybuf);
+            else
+                printf("Found %s at %d", mybuf, line);
+
+        }
+
         if (kDown & KEY_X) {
             //Save current file
             //Clear buffer
