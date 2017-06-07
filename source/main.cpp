@@ -143,9 +143,10 @@ int main(int argc, char **argv)
             //Write out characters to file
             bool success = write_to_file(filename, file);
             
-            if (success)
+            if (success) {
                 print_save_status("File written to " + filename);
-            else {
+                print_directory_status(filename);
+            } else {
                 print_save_status("Failed to write " + filename);
             }
 
@@ -168,11 +169,15 @@ int main(int argc, char **argv)
                 filename.push_back(mybuf[i]);
             File oldfile = file;
             file = open_file(filename);
+            
             //print functions here seem to crash the program
             if (file.read_success) {
                 update_screen(file, curr_line);
                 clear_save_status();
                 std::cout << "Successfully opened " << filename << std::endl;
+                clear_directory_status();
+                std::cout << "Current file: " << filename;
+                //print_directory_status(filename);
                 consoleSelect(&topScreen);
                 //print_save_status("Successfully opened " + filename);
             } else {

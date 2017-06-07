@@ -17,6 +17,8 @@ bool write_to_file(std::string& filename, File& file) {
 File open_file(std::string& filename) {
     std::ifstream file_open (filename);
     File file;
+    std::cout << "op ";
+    //Remove newline at start
     file.lines.pop_front();
     if (file_open.is_open()) {
         std::string line;
@@ -26,8 +28,10 @@ File open_file(std::string& filename) {
                 line_vec.push_back(ch);
             file.add_line(line_vec);
         }
-        if(file.lines.end()->back() != '\n')
+        //If the last line in the file doesn't begin with a newline
+        if (*file.lines.back().begin() != '\n') {
             file.lines.push_back(std::vector<char> {'\n'});
+        }
         file.read_success = true;
         file_open.close();
     } else {

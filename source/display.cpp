@@ -78,6 +78,7 @@ void print_save_status(std::string message) {
 }
 
 void clear_line_status() {
+    consoleSelect(&bottomScreen);
     printf(LINE_STATUS_LINE);
     printf("                                               ");
     printf(LINE_STATUS_LINE);
@@ -86,6 +87,19 @@ void clear_line_status() {
 void print_line_status(unsigned int current_line) {
     clear_line_status();
     std::cout << "Current line: " << current_line+1;
+}
+
+void clear_directory_status() {
+    consoleSelect(&bottomScreen);
+    printf(DIRECTORY_LINE);
+    printf("                                               ");
+    printf(DIRECTORY_LINE);
+}
+
+void print_directory_status(std::string filename) {
+    clear_directory_status();
+    std::cout << "Current directory: " << filename;
+
 }
 
 void update_screen(File& file, unsigned int current_line) {

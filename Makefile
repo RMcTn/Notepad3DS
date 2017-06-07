@@ -33,6 +33,9 @@ SOURCES		:=	source
 DATA		:=	data
 INCLUDES	:=	include
 #ROMFS		:=	romfs
+APP_TITLE	:= Notepad3DS
+APP_DESCRIPTION	:= Text editor for the Nintendo 3DS console
+APP_AUTHOR 	:= SomeAmountOfGravy
 
 #---------------------------------------------------------------------------------
 # options for code generation

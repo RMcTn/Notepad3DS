@@ -11,6 +11,7 @@
 #define SAVE_STATUS_LINE "\x1b[14;0H"
 #define INSTRUCTION_LINE "\x1b[0;0H"
 #define VERSION_LINE "\x1b[11;0H"
+#define DIRECTORY_LINE "\x1b[17;0H"
 
 extern PrintConsole topScreen, bottomScreen; 
 extern int scroll;
@@ -28,6 +29,9 @@ void print_save_status(std::string message);
 
 void clear_line_status();
 void print_line_status(unsigned int current_line);
+
+void clear_directory_status();
+void print_directory_status(std::string filename);
 
 void print_instructions();
 
