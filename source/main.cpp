@@ -54,8 +54,8 @@ int main(int argc, char **argv)
 		bool didit = false;
 
         swkbdInit(&swkbd, SWKBD_TYPE_NORMAL, 1, -1);
-        swkbdSetValidation(&swkbd, SWKBD_ANYTHING, SWKBD_FILTER_DIGITS | SWKBD_FILTER_AT | SWKBD_FILTER_PERCENT /*| SWKBD_FILTER_BACKSLASH*/ | SWKBD_FILTER_PROFANITY, 2);
-        swkbdSetFeatures(&swkbd, SWKBD_MULTILINE);
+        swkbdSetValidation(&swkbd, SWKBD_ANYTHING, SWKBD_ANYTHING, 2);
+        swkbdSetFeatures(&swkbd, SWKBD_DARKEN_TOP_SCREEN);
 
         if (kDown & KEY_A) {
             //Select current line for editing
