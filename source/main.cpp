@@ -10,7 +10,7 @@
 #define BUFFER_SIZE 60
 #define MAX_BOTTOM_SIZE 28
 
-#define VERSION "Notepad3DS Version 1.0"
+#define VERSION "Notepad3DS Version 1.1"
 
 
 PrintConsole topScreen, bottomScreen;
