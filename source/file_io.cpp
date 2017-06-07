@@ -17,7 +17,6 @@ bool write_to_file(std::string& filename, File& file) {
 File open_file(std::string& filename) {
     std::ifstream file_open (filename);
     File file;
-    std::cout << "op ";
     //Remove newline at start
     file.lines.pop_front();
     if (file_open.is_open()) {
