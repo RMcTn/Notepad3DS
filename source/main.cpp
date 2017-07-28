@@ -257,9 +257,9 @@ void move_down(File file) {
                 curr_line++;
             }
         }
+        update_screen(file, curr_line);
     }
 
-    update_screen(file, curr_line);
 }
 
 void move_up(File file) {
