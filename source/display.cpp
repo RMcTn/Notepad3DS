@@ -62,12 +62,19 @@ std::string char_vec_to_string(std::vector<char>& line) {
 void print_text(const char* str, unsigned int count, unsigned int selected_line) {
 
                 if (count == selected_line)
-                    if (str[0] == '\n')
-                        printf("\x1b[47;30m(empty line)\x1b[0m\n");
-                    else
-                        printf("\x1b[47;30m%s\x1b[0m", str);
+                    if (str[0] == '\n') {
+                        printf(SELECTED_TEXT_COLOUR);
+                        printf("(empty line)");
+                        printf(DEFAULT_TEXT_COLOUR);
+                        printf("\n");
+                    } else {
+                        printf(SELECTED_TEXT_COLOUR);
+                        printf("%s", str);
+                        printf(DEFAULT_TEXT_COLOUR);
+                    }
                 else {
-                    printf("\x1b[0m%s", str);
+                    printf(DEFAULT_TEXT_COLOUR);
+                    printf("%s", str);
                 }
 }
 

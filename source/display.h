@@ -14,6 +14,9 @@
 #define VERSION_LINE "\x1b[11;0H"
 #define DIRECTORY_LINE "\x1b[17;0H"
 
+#define DEFAULT_TEXT_COLOUR "\x1b[0m"
+#define SELECTED_TEXT_COLOUR "\x1b[47;30m"
+
 extern PrintConsole topScreen, bottomScreen; 
 extern int scroll;
 
