@@ -7,6 +7,7 @@
 #define CLEAR_SCREEN_LINES 40
 #define MAX_LINES 28
 #define MAX_WIDTH 49
+#define SCREEN_START_POINT "\x1b[0;0H"
 #define LINE_STATUS_LINE "\x1b[12;0H"
 #define SAVE_STATUS_LINE "\x1b[14;0H"
 #define INSTRUCTION_LINE "\x1b[0;0H"

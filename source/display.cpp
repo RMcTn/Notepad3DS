@@ -6,13 +6,12 @@
 #include <math.h>
 void clear_screen() {
     consoleSelect(&topScreen);
-    //Cursor to one under top left
-    std::cout << "\x1b[1;0H";
+    //Cursor to top left
+    std::cout << SCREEN_START_POINT;
     //Clear screen with empty lines
     for (int i = 0; i < CLEAR_SCREEN_LINES; i++)
         std::cout << std::string(70, ' ');
-    //Cursor to top left
-    std::cout << "\x1b[0;0H";
+    std::cout << SCREEN_START_POINT;
 }
 
 void clear_save_status() {
