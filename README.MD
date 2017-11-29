@@ -22,3 +22,6 @@ __DPad/CPad__ - Movement up/down
 __L__ - Hold with movement to jump to beginning/end  
 
 __NOTE:__ Notepad3DS can access directories but cannot create them. Saving a file to a non existing directory will __NOT__ save the file correctly.  
+
+## Further information
+Each line can hold a maximum of 1024 characters when edited. If a line with more than 1024 characters is edited, it __WILL__ be truncated with no way of undoing this.
