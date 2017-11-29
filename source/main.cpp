@@ -7,10 +7,10 @@
 #include "display.h"
 #include "file_io.h"
 
-#define BUFFER_SIZE 60
+#define BUFFER_SIZE 1025    //Notepad's line limit + \0
 #define MAX_BOTTOM_SIZE 28
 
-#define VERSION "Notepad3DS Version 1.1"
+#define VERSION "Notepad3DS Version 1.11"
 
 
 PrintConsole topScreen, bottomScreen;
