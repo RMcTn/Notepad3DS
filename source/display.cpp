@@ -116,15 +116,14 @@ void update_screen(File& file, unsigned int current_line) {
     unsigned int count = 0;
     
     //No scrolling needed
-    if (file.lines.size() < MAX_LINES) {
+    if (file.lines.size() - 1 <= MAX_LINES) {
         for (auto iter = file.lines.begin(); iter != file.lines.end(); iter++) {
-
             //Print everything in the vector<char> that iterator points to
-                std::string temp = char_vec_to_string(*iter);
-                const char* str_to_print = temp.c_str();
-                print_text(str_to_print, count, current_line);
-                count++;
-            }
+            std::string temp = char_vec_to_string(*iter);
+            const char* str_to_print = temp.c_str();
+            print_text(str_to_print, count, current_line);
+            count++;
+        }
         
     //Scrolling needed
     } else {

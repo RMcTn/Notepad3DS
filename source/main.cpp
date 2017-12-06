@@ -10,7 +10,7 @@
 #define BUFFER_SIZE 1025    //Notepad's line limit + \0
 #define MAX_BOTTOM_SIZE 28
 
-#define VERSION "Notepad3DS Version 1.11"
+#define VERSION "Notepad3DS Version 1.1.2"
 
 
 PrintConsole topScreen, bottomScreen;
@@ -218,7 +218,7 @@ int main(int argc, char **argv)
 			if (button != SWKBD_BUTTON_NONE)
 			{
                 std::vector<char> new_text = char_arr_to_vector(mybuf);
-                
+
                 if (curr_line >= file.lines.size()) {
                     //Empty line, add a new one.
                     file.add_line(new_text);
